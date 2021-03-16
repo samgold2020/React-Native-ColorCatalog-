@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, TextInput, Button } from "react-native";
+import { StyleSheet, View, TextInput, Button, Alert } from "react-native";
 
 export default function ColorForm({ onNewColor=f => f }) {
   //Save the current input value in state
@@ -26,12 +26,16 @@ export default function ColorForm({ onNewColor=f => f }) {
       {/* //capture the value when the user presses add */}
       <Button title="Add"
       onPress={() => {
+        if (inputValue.length >= 1) {
         //removes the keyboard focus from the current elemenet, aka the input
         input.current.blur()
         //call the onNewColor function
         onNewColor(inputValue);
         //returns the blank setValue with the placeholder
-        setValue("")
+        setValue("") }
+        else {
+          Alert.alert("Please enter a color")
+        }
       }}/>
     </View>
   )
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 60,
     flexDirection: "row",
-    alignItems: "cente r",
+    alignItems: "center",
   },
   txtInput: {
     flex: 1,
